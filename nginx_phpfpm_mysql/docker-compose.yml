@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - 8080:8080
+        volumes:
+            - ./www:/www
+            - ./site.conf:/etc/nginx/conf.d/site.conf
+        links:
+            - php
+    php:
+        build:
+            context: ./dockerfiles/php
+        volumes:
+            - ./www:/www
+        links:
+            - db
+
+    db:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "1306:3306"
+        volumes: 
+            - /var/lib/mysql
