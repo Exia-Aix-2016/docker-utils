@@ -1,0 +1,11 @@
+{
+    "require": {
+        "laravel/laravel": "@stable",
+        "firebase/php-jwt": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "YourNamespace\\": "app/"
+        }
+    }
+}
