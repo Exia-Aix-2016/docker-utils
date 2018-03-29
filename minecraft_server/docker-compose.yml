@@ -1,0 +1,62 @@
+version: '3.4'
+
+services:
+    minecraft_server:
+        image: itzg/minecraft-server:latest 
+        ports:
+            - 25565:25565
+            - 25575:25575
+
+        environment:
+
+            #Accept EULA minecraft
+            EULA: "TRUE"
+            #Type of server which will run.
+            TYPE: "PAPER"
+            #Server version
+            VERSION: "LATEST"
+            #Amount of memory you can allocate.
+            MEMORY: 4G
+            #Java start params (use to optimise java virtual machine).
+            JVM_XX_OPTS: "-XX:+UseG1GC"
+
+            #Online mod. false allow connection for crack client.
+            ONLINE_MODE: "true"
+
+            #Enable remote console.
+            ENABLE_RCON: "true"
+            #remote console port.
+            RCON_PORT: "25575"
+            #remote console password.
+            RCON_PASSWORD: "rcon:minecraft"
+            #Put your pseudo here to have a all permissions.
+            OPS: "Akitoshi"
+
+            #main world name.
+            LEVEL: "world"
+            #Allow PVP.
+            PVP: "true"
+            #Set server difficulty (easy | normal | hard).
+            DIFFICULTY: "normal"
+
+            #Message which will display on server list player.
+            MOTD: "Welcome !"
+
+            #Link modpack
+            MODPACK: ""
+
+
+        volumes:
+            - ./data:/data
+        links:
+            - db
+
+    db:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "1306:3306"
+        volumes: 
+            - /var/lib/mysql
