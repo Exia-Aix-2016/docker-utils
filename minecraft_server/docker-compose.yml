@@ -9,7 +9,7 @@ services:
 
         environment:
 
-            #Accept EULA minecraft
+            #Accept EULA minecraftddd
             EULA: "TRUE"
             #Type of server which will run.
             TYPE: "PAPER"
