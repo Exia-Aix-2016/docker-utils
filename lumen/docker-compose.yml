@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+    proxy:
+        image: nginx:latest
+        ports:
+            - 8080:8080
+        volumes:
+            - ./public:/www/public
+            - ./nginx.conf:/etc/nginx/conf.d/site.conf
+        links:
+            - php
+    php:
+        build:
+            context: .
+            dockerfile: ./php.dockerfile
+        volumes:
+            - .:/www
+        links:
+            - database
+
+    database:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_DATABASE: lumen
+        ports:
+            - "1306:3306"
+        volumes: 
+            - /var/lib/mysql
+            
+    
+    composer:
+        image: composer
+        volumes: 
+            - .:/app
+        command: composer install
